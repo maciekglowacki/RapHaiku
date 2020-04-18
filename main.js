@@ -1,9 +1,9 @@
 import nlp from "compromise";
 import syllable from "compromise-syllables";
-import Connector from "./geniusapiclient/connector.js";
+import Genius from "./geniusapiclient/genius.js";
 nlp.extend(syllable);
 
-const connector = new Connector();
+const genius = new Genius();
 
 const partsOfSpeech = ["Noun", "Verb", "Adjective", "Adverb", "Preposition", "Conjunction", "Determiner"];
 
@@ -29,7 +29,9 @@ function getSyllablesCount(sentence) {
   return syllablesCount;
 }
 
-console.log(getSyllablesCount(sentence));
-console.log(getTextAndTags(sentence));
+// console.log(getSyllablesCount(sentence));
+// console.log(getTextAndTags(sentence));
 
-console.log(connector.getArtistId());
+let gucci = genius.getArtistId(id => gucci = id);
+setTimeout(() => console.log(gucci), 3000);
+// let lol = await genius.getArtistIdXD();
