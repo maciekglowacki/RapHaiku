@@ -30,23 +30,27 @@ export default class Genius {
   // }
 
   async getArtistId(name) {
-    let id;
+    if (name === undefined) throw new Error("Name is required");
     try {
-      const fullApiUrl = `${this.apiUrl}/search?q=Gucci%20Mane&access_token=${this.apiKey}`;
-      let result = await axios.get(fullApiUrl);
-      id = result.data.response.hits[0].result.primary_artist.id;
-    } catch {
-      console.log("error");
+      name = encodeURIComponent(name);
+      const fullApiUrl = `${this.apiUrl}/search?q=${name}&access_token=${this.apiKey}`;
+      const result = await axios.get(fullApiUrl);
+      const id = result.data.response.hits[0].result.primary_artist.id;
+      return id;
+    } catch (err) {
+      throw new Error(err.message);
     }
-    return id;
   }
-  async getArtistSongs(id) {
+
+  async getArtistSongsByName(name) {
     try {
-      const fullApiUrl = `${this.apiUrl}/artists/13/songs`;
-      let result = await axios.get(fullApiUrl);
+      let id = await this.getArtistId();
+      const fullApiUrl = `${this.apiUrl}/artists/${id}/songs`;
+      const result = await axios.get(fullApiUrl);
       console.log(result);
-    } catch {
-      console.log("error");
+      return result;
+    } catch (err) {
+      throw new Error(err.message);
     }
   }
 }

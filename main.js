@@ -32,6 +32,7 @@ function getSyllablesCount(sentence) {
 // console.log(getSyllablesCount(sentence));
 // console.log(getTextAndTags(sentence));
 
-let gucci = genius.getArtistId(id => gucci = id);
-setTimeout(() => console.log(gucci), 3000);
-// let lol = await genius.getArtistIdXD();
+let gucciId = genius
+  .getArtistId("Gucci Mane")
+  .then((id) => (gucciId = id))
+  .catch((err) => console.error(err));
