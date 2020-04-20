@@ -38,4 +38,4 @@ let gucciSongs = genius
   .catch((err) => console.error(err));
 
 
-setTimeout(()=>{console.log(gucciSongs)},2000);
+// setTimeout(()=>{console.log(gucciSongs)},2000);

@@ -1,4 +1,5 @@
 import axios from "axios";
+import cheerio from "cheerio";
 
 export default class Genius {
   constructor() {
@@ -60,6 +61,13 @@ export default class Genius {
   }
   async getArtistSongsByName(name) {
     const songsPaths = await this.getArtistSongsPaths(name);
+    const fullSongPath = `https://genius.com${songsPaths[0]}`;
+    const html = await axios.get(fullSongPath);
+    const $ = cheerio.load(html);
+    console.log($);
+    // for (const songPath of songsPaths) {
+    //   console.log(songPath);
+    // }
     return songsPaths;
   }
 }
