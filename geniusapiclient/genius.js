@@ -4,7 +4,7 @@ export default class Genius {
   constructor() {
     // this.ApiUrl = "https://api.genius.com/songs/378195";
     this.apiUrl = "https://api.genius.com";
-    this.apiKey = "VswyeqGtcogVXEqX31ZAYYtkHpKgyI9cO2Ka7p14Fi8fFZ7ho5TAhK09exMShT7E";
+    this.apiKey = "wfJNsgpQIH6cxE2-HwSHKTTahAkpqdsmSlnajzjheG_7z0yF9tolKhRBxWBaKVSq";
   }
 
   getSongById(id) {
@@ -33,8 +33,8 @@ export default class Genius {
     if (name === undefined) throw new Error("Name is required");
     try {
       name = encodeURIComponent(name);
-      const fullApiUrl = `${this.apiUrl}/search?q=${name}&access_token=${this.apiKey}`;
-      const result = await axios.get(fullApiUrl);
+      const fullApiUrl = `${this.apiUrl}/search?q=${name}`;
+      const result = await axios.get(fullApiUrl, { headers: { Authorization: `Bearer ${this.apiKey}` } });
       const id = result.data.response.hits[0].result.primary_artist.id;
       return id;
     } catch (err) {
@@ -43,14 +43,19 @@ export default class Genius {
   }
 
   async getArtistSongsByName(name) {
+    if (name === undefined) throw new Error("Name is required");
     try {
-      let id = await this.getArtistId();
+      const id = await this.getArtistId(name);
       const fullApiUrl = `${this.apiUrl}/artists/${id}/songs`;
-      const result = await axios.get(fullApiUrl);
+      const result = await axios.get(fullApiUrl, { headers: { Authorization: `Bearer ${this.apiKey}` } });
       console.log(result);
       return result;
     } catch (err) {
-      throw new Error(err.message);
+      if (typeof err === "object") {
+        throw new Error(err);
+      } else {
+        throw new Error(JSON.stringify(err.toJSON(), null, 2));
+      }
     }
   }
 }
