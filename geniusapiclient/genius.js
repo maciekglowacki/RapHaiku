@@ -42,14 +42,14 @@ export default class Genius {
     }
   }
 
-  async getArtistSongsByName(name) {
+  async getArtistSongsPaths(name) {
     if (name === undefined) throw new Error("Name is required");
     try {
       const id = await this.getArtistId(name);
       const fullApiUrl = `${this.apiUrl}/artists/${id}/songs`;
       const result = await axios.get(fullApiUrl, { headers: { Authorization: `Bearer ${this.apiKey}` } });
-      console.log(result);
-      return result;
+      const songsPaths = result.data.response.songs.map((song) => song.path);
+      return songsPaths;
     } catch (err) {
       if (typeof err === "object") {
         throw new Error(err);
@@ -57,5 +57,9 @@ export default class Genius {
         throw new Error(JSON.stringify(err.toJSON(), null, 2));
       }
     }
+  }
+  async getArtistSongsByName(name) {
+    const songsPaths = await this.getArtistSongsPaths(name);
+    return songsPaths;
   }
 }
