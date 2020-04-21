@@ -33,9 +33,10 @@ function getSyllablesCount(sentence) {
 // console.log(getTextAndTags(sentence));
 
 let gucciSongs = genius
-  .getArtistSongsByName("Gucci Mane")
+  .getArtistSongsLyrics("Gucci Mane")
   .then((songs) => (gucciSongs = songs))
   .catch((err) => console.error(err));
 
-
-// setTimeout(()=>{console.log(gucciSongs)},2000);
+setTimeout(() => {
+  console.log(gucciSongs);
+}, 2000);
