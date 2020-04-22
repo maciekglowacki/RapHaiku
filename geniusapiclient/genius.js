@@ -1,5 +1,6 @@
 import axios from "axios";
 import cheerio from "cheerio";
+import { getWordSyllablesCount, splitSentenceIntoWords } from "../main.js";
 
 export default class Genius {
   constructor() {
@@ -99,9 +100,9 @@ export default class Genius {
             }
           }
         }
+        console.log(lyricsFiltered);
         songsLyrics.push(...lyricsFiltered);
       }
-      console.log(songsLyrics.length);
       return songsLyrics;
     } catch (err) {
       throw new Error(err);
@@ -111,8 +112,21 @@ export default class Genius {
   extractHaikuLegibleLinesFromLyrics(lyrics) {
     let legibleFiveSyllableExpressions = [];
     let legibleSevenSyllableExpressions = [];
-    for(const el of lyrics){
-      
+    for (const line of lyrics) {
+      let counter = 0;
+      const words = line.split(" ");
+      for (let i = 0; i < words.length; i++) {
+        const syllables = getWordSyllablesCount(words[i]);
+        counter += syllables;
+        if (counter === 5) {
+          legibleFiveSyllableExpressions.push(words.slice(0, i).join(" "));
+          break;
+        } else if (counter === 7) {
+          legibleSevenSyllableExpressions.push(words.slice(0, i).join(" "));
+          break;
+        }
+      }
     }
+    return [legibleFiveSyllableExpressions, legibleSevenSyllableExpressions];
   }
 }

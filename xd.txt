@@ -1,0 +1,11 @@
+15
+XD
+[
+  [ 'be', 'fore' ], [ 'it' ],
+  [ 'pop' ],        [ 'be', 'fore' ],
+  [ 'it' ],         [ 'dock' ],
+  [ 'get' ],        [ 'it' ],
+  [ 'hot' ],        [ 'then' ],
+  [ 'make' ],       [ 'it' ],
+  [ 'spin' ]
+]
