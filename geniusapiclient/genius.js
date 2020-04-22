@@ -100,7 +100,6 @@ export default class Genius {
             }
           }
         }
-        console.log(lyricsFiltered);
         songsLyrics.push(...lyricsFiltered);
       }
       return songsLyrics;
@@ -110,8 +109,8 @@ export default class Genius {
   }
 
   extractHaikuLegibleLinesFromLyrics(lyrics) {
-    let legibleFiveSyllableExpressions = [];
-    let legibleSevenSyllableExpressions = [];
+    let legibleFiveSyllableExpressions = new Set();
+    let legibleSevenSyllableExpressions = new Set();
     for (const line of lyrics) {
       let counter = 0;
       const words = line.split(" ");
@@ -119,14 +118,34 @@ export default class Genius {
         const syllables = getWordSyllablesCount(words[i]);
         counter += syllables;
         if (counter === 5) {
-          legibleFiveSyllableExpressions.push(words.slice(0, i).join(" "));
+          const legibleExpression = words.slice(0, i).join(" ");
+          legibleFiveSyllableExpressions.add(legibleExpression);
           break;
         } else if (counter === 7) {
-          legibleSevenSyllableExpressions.push(words.slice(0, i).join(" "));
+          const legibleExpression = words.slice(0, i).join(" ");
+          legibleSevenSyllableExpressions.add(legibleExpression);
           break;
         }
       }
     }
+    legibleFiveSyllableExpressions = [...legibleFiveSyllableExpressions];
+    legibleSevenSyllableExpressions = [...legibleSevenSyllableExpressions];
     return [legibleFiveSyllableExpressions, legibleSevenSyllableExpressions];
+  }
+
+  async generateHaiku(artistName) {
+    const lyrics = await this.getArtistSongsLyrics(artistName);
+    const [legibleFiveSyllableExpressions, legibleSevenSyllableExpressions] = this.extractHaikuLegibleLinesFromLyrics(lyrics);
+
+    let haiku = [];
+
+    const firstLine = legibleFiveSyllableExpressions[Math.floor(Math.random() * legibleFiveSyllableExpressions.length)];
+    const secondLine = legibleFiveSyllableExpressions[Math.floor(Math.random() * legibleSevenSyllableExpressions.length)];
+    const thirdLine = legibleFiveSyllableExpressions[Math.floor(Math.random() * legibleFiveSyllableExpressions.length)];
+    console.log(firstLine);
+
+    haiku.push(firstLine, secondLine, thirdLine);
+    // console.log(haiku);
+    return haiku;
   }
 }

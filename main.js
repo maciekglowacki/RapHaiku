@@ -13,15 +13,12 @@ let sentence = "Before it pop, before it dock, Get it hot then make it spin";
 function getTextAndTags(sentence) {
   let terms = nlp(sentence)
     .json()[0]
-    .terms.map((el) =>
-      Object.assign({}, { text: el.text }, { tags: el.tags.filter((tag) => partsOfSpeech.includes(tag)) })
-    );
+    .terms.map((el) => Object.assign({}, { text: el.text }, { tags: el.tags.filter((tag) => partsOfSpeech.includes(tag)) }));
   return terms;
 }
 
 function splitSentenceIntoWords(sentence) {
   const words = nlp(sentence).terms();
-  console.log(words);
   return words;
 }
 
@@ -45,27 +42,10 @@ function getSentenceSyllablesCount(sentence) {
   return syllablesCount;
 }
 
-function getSyllablesCountv2(word) {
-  let syllablesCountv2 = word.syllables().map(({ syllables }) => syllables);
-  return syllablesCountv2;
-}
-
-// console.log(getSyllablesCount(sentence));
-// console.log(getTextAndTags(sentence));
-
-// let gucciSongs = genius
-//   .getArtistSongsLyrics("Gucci Mane")
-//   .then((songs) => (gucciSongs = songs))
-//   .catch((err) => console.error(err));
-
-// setTimeout(() => {
-//   console.log(gucciSongs);
-// }, 2000);
-
-// console.log(getSyllablesCount(sentence));
-// console.log(getSyllablesCountv2(sentence));
-
-let xd = genius.extractHaikuLegibleLinesFromLyrics(["Before it pop, before it dock, Get it hot then make it spin"]);
-console.log(xd);
+let gucciSongs = genius
+  .generateHaiku("Gucci Mane")
+  .then((songs) => (gucciSongs = songs))
+  .then(() => console.log(gucciSongs))
+  .catch((err) => console.error(err));
 
 export { splitSentenceIntoWords, getWordSyllablesCount };
