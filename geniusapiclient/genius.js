@@ -62,17 +62,57 @@ export default class Genius {
   async getArtistSongsLyrics(name) {
     try {
       const songsPaths = await this.getArtistSongsPaths(name);
-      let songsLyrics = "XDDD";
+      const artistLyricsTags = [
+        "[Intro]",
+        "[Verse]",
+        "Verse 1",
+        "Hook:x2",
+        "Verse 2:",
+        "[Chorus: Gucci Mane]",
+        "[Verse 1: Gucci Mane]",
+        "[Hook: Gucci Mane]",
+        "[Break]",
+        "[Outro]",
+        "[Gucci Mane]",
+        "[Hook]",
+        "[Verse 3]",
+        "[Verse 2]",
+      ];
+      let songsLyrics = [];
       for (const songPath of songsPaths) {
         const fullSongPath = `https://genius.com${songPath}`;
         const { data } = await axios.get(fullSongPath);
         const $ = cheerio.load(data);
-        const lyrics = $(".lyrics p").text();
-        songsLyrics += lyrics;
+        const lyrics = $(".lyrics p")
+          .text()
+          .split("\n")
+          .filter((el) => el.length);
+        let lyricsFiltered = [];
+        for (let i = 0; i < lyrics.length; i++) {
+          if (artistLyricsTags.includes(lyrics[i])) {
+            for (let j = i + 1; j < lyrics.length; j++) {
+              if (lyrics[j].charAt(0) === "[") {
+                break;
+              } else {
+                lyricsFiltered.push(lyrics[j]);
+              }
+            }
+          }
+        }
+        songsLyrics.push(...lyricsFiltered);
       }
+      console.log(songsLyrics.length);
       return songsLyrics;
     } catch (err) {
       throw new Error(err);
+    }
+  }
+
+  extractHaikuLegibleLinesFromLyrics(lyrics) {
+    let legibleFiveSyllableExpressions = [];
+    let legibleSevenSyllableExpressions = [];
+    for(const el of lyrics){
+      
     }
   }
 }
