@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ff9dc0;
+  height: 100%;
+  font-family: "Playfair Display";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 48px;
+}
+
+.container {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.fancy-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+
+.form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #fdff9f;
+  border-radius: 10px;
+}
+
+.form input {
+  -webkit-appearance: none;
+  outline: none;
+  background-color: #fdff9f;
+  border: none;
+  font-size: 36px;
+  font-family: Inconsolata;
+}
