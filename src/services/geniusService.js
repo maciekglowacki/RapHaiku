@@ -21,8 +21,10 @@ export default class Genius {
     if (name === undefined) throw new Error("Name is required");
     try {
       name = encodeURIComponent(name);
-      const fullApiUrl = `${this.apiUrl}/search?q=${name}`;
-      const result = await axios.get(fullApiUrl, { headers: { Authorization: `Bearer ${this.apiKey}` } });
+      const fullApiUrl = `${this.apiUrl}/search?q=${name}&access_token=${this.apiKey}`;
+      // const result = await axios.get(fullApiUrl, { headers: { Authorization: `Bearer ${this.apiKey}` } });
+      console.log(fullApiUrl);
+      const result = await axios.get(fullApiUrl);
       const id = result.data.response.hits[0].result.primary_artist.id;
       return id;
     } catch (err) {
@@ -34,8 +36,10 @@ export default class Genius {
     if (name === undefined) throw new Error("Name is required");
     try {
       const id = await this.getArtistId(name);
-      const fullApiUrl = `${this.apiUrl}/artists/${id}/songs`;
-      const result = await axios.get(fullApiUrl, { headers: { Authorization: `Bearer ${this.apiKey}` } });
+      const fullApiUrl = `${this.apiUrl}/artists/${id}/songs?access_token=${this.apiKey}`;
+      // const result = await axios.get(fullApiUrl, { headers: { Authorization: `Bearer ${this.apiKey}` } });
+      console.log(fullApiUrl);
+      const result = await axios.get(fullApiUrl);
       const songsPaths = result.data.response.songs.map((song) => song.path);
       return songsPaths;
     } catch (err) {
@@ -68,7 +72,9 @@ export default class Genius {
       let songsLyrics = [];
       for (const songPath of songsPaths) {
         const fullSongPath = `https://genius.com${songPath}`;
-        const { data } = await axios.get(fullSongPath);
+        const { data } = await axios.get(fullSongPath, {
+          headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS" },
+        });
         const $ = cheerio.load(data);
         const lyrics = $(".lyrics p")
           .text()
@@ -129,5 +135,11 @@ export default class Genius {
 
     const haiku = [firstLine, secondLine, thirdLine];
     return haiku;
+  }
+  async xd() {
+    const result = await axios.get(
+      "https://api.genius.com/artists/13/songs?access_token=wfJNsgpQIH6cxE2-HwSHKTTahAkpqdsmSlnajzjheG_7z0yF9tolKhRBxWBaKVSq"
+    );
+    return result;
   }
 }

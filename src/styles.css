@@ -13,33 +13,48 @@ body {
 }
 
 .container {
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
 
-.fancy-line {
+.top-text {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  text-align: center;
 }
 
-
-
-.form {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: #fdff9f;
+.form-content {
+  background: #fdff9f;
   border-radius: 10px;
 }
 
-.form input {
-  -webkit-appearance: none;
+.search-input {
   outline: none;
-  background-color: #fdff9f;
   border: none;
-  font-size: 36px;
   font-family: Inconsolata;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 38px;
+  background: #fdff9f;
+  border-radius: 10px;
+  margin-left: 10px;
+  margin-bottom: 5px;
 }
+
+.search-btn {
+  width: 55px;
+  height: 52px;
+  float: right;
+  border-radius: 0 10px 10px 0;
+  border: 0;
+  cursor: pointer;
+  background-color: #4aff77;
+}
+
+.search-btn:hover {
+  background: #32bf55;
+}
+

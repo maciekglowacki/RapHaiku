@@ -1,0 +1,33 @@
+2020/04/27-15:59:25.174 d65b2 Reusing MANIFEST /home/maciek/Projects/rapHaiku/src/~/.config/google-chrome/Default/Session Storage/MANIFEST-000001
+2020/04/27-15:59:25.174 d65b2 Recovering log #3
+2020/04/27-15:59:25.175 d65b2 Reusing old log /home/maciek/Projects/rapHaiku/src/~/.config/google-chrome/Default/Session Storage/000003.log 
+2020/04/27-16:07:00.841 d764d Level-0 table #5: started
+2020/04/27-16:07:00.845 d764d Level-0 table #5: 21939 bytes OK
+2020/04/27-16:07:00.849 d764d Delete type=0 #3
+2020/04/27-16:12:25.895 d764d Level-0 table #7: started
+2020/04/27-16:12:25.899 d764d Level-0 table #7: 18772 bytes OK
+2020/04/27-16:12:25.903 d764d Delete type=0 #4
+2020/04/27-16:19:36.796 d764d Level-0 table #9: started
+2020/04/27-16:19:36.803 d764d Level-0 table #9: 25690 bytes OK
+2020/04/27-16:19:36.812 d764d Delete type=0 #6
+2020/04/27-16:26:20.372 d764d Level-0 table #11: started
+2020/04/27-16:26:20.378 d764d Level-0 table #11: 19138 bytes OK
+2020/04/27-16:26:20.382 d764d Delete type=0 #8
+2020/04/27-16:29:09.108 d764d Level-0 table #13: started
+2020/04/27-16:29:09.112 d764d Level-0 table #13: 20479 bytes OK
+2020/04/27-16:29:09.117 d764d Delete type=0 #10
+2020/04/27-16:40:52.189 d764d Level-0 table #15: started
+2020/04/27-16:40:52.195 d764d Level-0 table #15: 18152 bytes OK
+2020/04/27-16:40:52.199 d764d Delete type=0 #12
+2020/04/27-16:40:52.201 d764d Compacting 4@0 + 1@1 files
+2020/04/27-16:40:52.223 d764d Generated table #16@0: 233 keys, 87059 bytes
+2020/04/27-16:40:52.223 d764d Compacted 4@0 + 1@1 files => 87059 bytes
+2020/04/27-16:40:52.227 d764d compacted to: files[ 0 1 1 0 0 0 0 ]
+2020/04/27-16:40:52.227 d764d Delete type=2 #13
+2020/04/27-16:40:52.227 d764d Delete type=2 #11
+2020/04/27-16:40:52.227 d764d Delete type=2 #9
+2020/04/27-16:40:52.227 d764d Delete type=2 #15
+2020/04/27-16:40:52.227 d764d Delete type=2 #7
+2020/04/27-18:53:12.752 d764d Level-0 table #18: started
+2020/04/27-18:53:12.756 d764d Level-0 table #18: 18433 bytes OK
+2020/04/27-18:53:12.760 d764d Delete type=0 #14

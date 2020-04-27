@@ -7,6 +7,18 @@ const genius = new Genius();
 const partsOfSpeech = ["Noun", "Verb", "Adjective", "Adverb", "Preposition", "Conjunction", "Determiner"];
 const sentence = "Before it pop, before it dock, Get it hot then make it spin";
 
+async function assignHaiku(arr) {
+  let rapperName = document.querySelector(".search-input").value;
+  console.log(rapperName);
+  const response = await genius.generateHaiku(rapperName);
+  const haikuDiv = [...document.querySelectorAll(".haiku p")];
+  haikuDiv.map((node, idx) => (node.innerText = response[idx]));
+  document.querySelector(".artist-info p").textContent = `by ${rapperName}`;
+}
+
+let btn = document.querySelector(".search-btn");
+btn.addEventListener("click", assignHaiku);
+
 //add error check
 function getTextAndTags(sentence) {
   let terms = nlp(sentence)
