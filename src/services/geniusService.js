@@ -72,9 +72,8 @@ export default class Genius {
       let songsLyrics = [];
       for (const songPath of songsPaths) {
         const fullSongPath = `https://genius.com${songPath}`;
-        const { data } = await axios.get(fullSongPath, {
-          headers: { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS" },
-        });
+        let response= await fetch(`https://cors-anywhere.herokuapp.com/${fullSongPath}`);
+        let data = await response.text();
         const $ = cheerio.load(data);
         const lyrics = $(".lyrics p")
           .text()
