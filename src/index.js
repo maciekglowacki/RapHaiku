@@ -1,61 +1,35 @@
-import nlp from "compromise";
-import syllable from "compromise-syllables";
-import Genius from "./services/geniusService";
-nlp.extend(syllable);
+import GeniusService from "./geniusService";
+import HaikuService from "./haikuService";
 
-const genius = new Genius();
-const partsOfSpeech = ["Noun", "Verb", "Adjective", "Adverb", "Preposition", "Conjunction", "Determiner"];
-const sentence = "Before it pop, before it dock, Get it hot then make it spin";
 
-async function assignHaiku(arr) {
-  let rapperName = document.querySelector(".search-input").value;
-  console.log(rapperName);
-  const response = await genius.generateHaiku(rapperName);
-  const haikuDiv = [...document.querySelectorAll(".haiku p")];
-  haikuDiv.map((node, idx) => (node.innerText = response[idx]));
-  document.querySelector(".artist-info p").textContent = `by ${rapperName}`;
+
+class Main{
+  constructor(){
+    this.geniusService = new GeniusService();
+    this.haikuService = new HaikuService();
+    this.searchBtn = document.querySelector(".search-btn");
+    this.searchInput = document.querySelector(".search-input");
+    this.resultContainer = document.querySelector(".artist-info p");
+  }
+
+  async  assignHaiku() {
+    const rapperName = this.searchInput.value;
+    const lyrics = await this.geniusService.getArtistSongsLyrics(rapperName);
+    const response =  this.haikuService.generateHaiku(lyrics);
+    const haikuDiv = [...document.querySelectorAll(".haiku p")];
+    haikuDiv.map((node, idx) => (node.innerText = response[idx]));
+    this.resultContainer.textContent = `by ${rapperName}`;
+  }
+
+  init(){
+    this.searchBtn.addEventListener("click", () => this.assignHaiku());
+  }
+
 }
 
-let btn = document.querySelector(".search-btn");
-btn.addEventListener("click", assignHaiku);
 
-//add error check
-function getTextAndTags(sentence) {
-  let terms = nlp(sentence)
-    .json()[0]
-    .terms.map((el) => Object.assign({}, { text: el.text }, { tags: el.tags.filter((tag) => partsOfSpeech.includes(tag)) }));
-  return terms;
-}
+const main = new Main();
+main.init();
 
-function splitSentenceIntoWords(sentence) {
-  const words = nlp(sentence).terms();
-  return words;
-}
 
-//add error check
-function getWordSyllablesCount(word) {
-  let syllablesCount = nlp(word)
-    .terms()
-    .syllables()
-    .map(({ syllables }) => syllables)
-    .reduce((count, syllables) => count + syllables.length, 0);
-  return syllablesCount;
-}
 
-//add error check
-function getSentenceSyllablesCount(sentence) {
-  let syllablesCount = nlp(sentence)
-    .terms()
-    .syllables()
-    .map(({ syllables }) => syllables)
-    .reduce((count, syllables) => count + syllables.length, 0);
-  return syllablesCount;
-}
-
-// let haiku = genius
-//   .generateHaiku("Gucci Mane")
-//   .then((data) => (haiku = data))
-//   .then(() => console.log(haiku))
-//   .catch((err) => console.error(err));
-
-export { splitSentenceIntoWords, getWordSyllablesCount };
