@@ -4,5 +4,5 @@ const config = {
     AXIOS_CONFIG: { headers: { "Access-Control-Allow-Origin": "*" } },
   };
   
-  export default config;
-  
+
+export default config;  

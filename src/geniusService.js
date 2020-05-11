@@ -10,7 +10,7 @@ export default class GeniusService {
   }
 
   async getSongById(id) {
-    if (id === undefined) throw new Error("Id is required");
+    if (id === undefined || id === "") throw new Error("Artist id is required");
     const fullApiUrl = `${this.apiUrl}/songs/${id}/?acess_token=${this.apiKey}`;
     try {
       const result = await axios.get(fullApiUrl);
@@ -18,16 +18,14 @@ export default class GeniusService {
     } catch (err) {
       throw new Error(err.message);
     }
-  } 
+  }
 
   async getArtistId(name) {
-    console.log("SDDS");
-    if (name === undefined || name === "") throw new Error("Name is required");
+    if (name === undefined || name === "") throw new Error("Artist name is required");
     try {
       name = encodeURIComponent(name);
       const fullApiUrl = `${this.apiUrl}/search?q=${name}&access_token=${this.apiKey}`;
       const result = await axios.get(fullApiUrl);
-      console.log(fullApiUrl);
       const id = result.data.response.hits[0].result.primary_artist.id;
       return id;
     } catch (err) {
@@ -35,11 +33,9 @@ export default class GeniusService {
     }
   }
 
-  async getArtistSongsPaths(name) {
-    console.log("GETIT")
-    if (name === undefined || name === "") throw new Error("Name is required");
+  async getArtistSongsPaths(id) {
+    if (id === undefined || id === "") throw new Error("Artist id is required");
     try {
-      const id = await this.getArtistId(name);
       const fullApiUrl = `${this.apiUrl}/artists/${id}/songs?access_token=${this.apiKey}`;
       const result = await axios.get(fullApiUrl);
       const songsPaths = result.data.response.songs.map((song) => song.path);
@@ -52,11 +48,8 @@ export default class GeniusService {
       }
     }
   }
-  async getArtistSongsLyrics(name) {
-    console.log("S");
+  async getArtistSongsLyrics(songsPaths) {
     try {
-      const songsPaths = await this.getArtistSongsPaths(name);
-      console.log(songsPaths);
       const artistLyricsTags = [
         "[Intro]",
         "[Verse]",
@@ -104,9 +97,14 @@ export default class GeniusService {
     }
   }
 
-
-  getLyrics(){
-
+  async getLyrics(name) {
+    try {
+      const artistId = await this.getArtistId(name);
+      const songsPaths = await this.getArtistSongsPaths(artistId);
+      const lyrics = await this.getArtistSongsLyrics(songsPaths);
+      return lyrics;
+    } catch (err) {
+      throw new Error(err);
+    }
   }
-
 }
