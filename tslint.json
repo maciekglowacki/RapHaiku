@@ -1,0 +1,10 @@
+{
+	"defaultSeverity": "error",
+	"extends": ["tslint:recommended"],
+	"jsRules": {},
+	"rules": {
+		"no-bitwise": false,
+		"array-type": [true, "generic"]
+	},
+	"rulesDirectory": []
+}
