@@ -1,5 +1,6 @@
 import GeniusService from "./geniusService";
 import HaikuService from "./haikuService";
+import { haikuTemplate } from "./haikuTemplate";
 
 class Main {
   constructor() {
@@ -12,19 +13,17 @@ class Main {
     this.searchInput = document.querySelector(".search-input");
     this.searchForm = document.querySelector(".form-content");
 
-    this.resultContainer = document.querySelector(".artist-info p");
+    this.resultContainer = document.querySelector(".haiku-container");
   }
 
   async assignHaiku() {
     const rapperName = this.searchInput.value;
     this.searchInput.value = "";
-    this.resultContainer.textContent = "";
+    this.resultContainer.innerHTML = "";
     this.startLoading();
     const lyrics = await this.geniusService.getLyrics(rapperName);
-    const response = this.haikuService.generateHaiku(lyrics);
-    const haikuDiv = [...document.querySelectorAll(".haiku p")];
-    haikuDiv.map((node, idx) => (node.innerText = response[idx]));
-    this.resultContainer.textContent = `by ${rapperName}`;
+    const haiku = this.haikuService.generateHaiku(lyrics);
+    this.resultContainer.innerHTML = haikuTemplate(haiku);
     this.stopLoading();
   }
 
