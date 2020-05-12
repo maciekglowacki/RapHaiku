@@ -1,4 +1,4 @@
-import { getWordSyllablesCount } from "./utils";
+const syllable = require("syllable");
 
 export default class HaikuService {
 	extractHaikuLines(lyrics: Array<string>) {
@@ -8,9 +8,9 @@ export default class HaikuService {
 			let counter = 0;
 			const words = line.split(" ");
 			for (let i = 0; i < words.length; i++) {
-				const syllables = getWordSyllablesCount(words[i]);
-				counter += syllables;
-				const expression = words.slice(0, i).join(" ");
+				const syllablesSyllable = syllable(words[i]);
+				counter += syllablesSyllable;
+				const expression = words.slice(0, i + 1).join(" ");
 				if (counter === 5 && !fiveSyllables.includes(expression)) {
 					fiveSyllables.push(expression);
 					break;
@@ -28,7 +28,7 @@ export default class HaikuService {
 		const [fiveSyllables, sevenSyllables] = this.extractHaikuLines(lyrics);
 
 		const firstLine = fiveSyllables[Math.floor(Math.random() * fiveSyllables.length)];
-		const secondLine = fiveSyllables[Math.floor(Math.random() * sevenSyllables.length)];
+		const secondLine = sevenSyllables[Math.floor(Math.random() * sevenSyllables.length)];
 		const thirdLine = fiveSyllables[Math.floor(Math.random() * fiveSyllables.length)];
 
 		const haiku = [firstLine, secondLine, thirdLine];

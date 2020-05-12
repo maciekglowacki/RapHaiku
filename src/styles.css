@@ -80,7 +80,19 @@ body {
 .artist-info img {
 	border-radius: 50%;
 	width: 100px;
-  height: 100px;
-  display: block;
-  margin: 0 auto;
+	height: 100px;
+	display: block;
+	margin: 20px 20px auto;
+}
+
+.haiku-container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.haiku-container p {
+	flex: 0 0 calc(50% - 10px);
+	height: 30px;
+	margin: 30px 30px 10px 10px;
 }

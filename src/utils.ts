@@ -4,20 +4,20 @@ nlp.extend(syllable);
 
 const partsOfSpeech = ["Noun", "Verb", "Adjective", "Adverb", "Preposition", "Conjunction", "Determiner"];
 
-export const getTextAndTags = (sentence) => {
+export const getTextAndTags = (sentence : string) => {
   const terms = nlp(sentence)
     .json()[0]
-    .terms.map((el) => Object.assign({}, { text: el.text }, { tags: el.tags.filter((tag) => partsOfSpeech.includes(tag)) }));
+    .terms.map((el : any) => Object.assign({}, { text: el.text }, { tags: el.tags.filter((tag : string) => partsOfSpeech.includes(tag)) }));
   return terms;
 };
 
-export const splitSentenceIntoWords = (sentence) => {
+export const splitSentenceIntoWords = (sentence : string) => {
   const words = nlp(sentence).terms();
   return words;
 };
 
 // add error check
-export const getWordSyllablesCount = (word) => {
+export const getWordSyllablesCount = (word : string) => {
   const syllablesCount = nlp(word)
     .terms()
     .syllables()
@@ -27,11 +27,11 @@ export const getWordSyllablesCount = (word) => {
 };
 
 // add error check
-export const getSentenceSyllablesCount = (sentence) => {
+export const getSentenceSyllablesCount = (sentence : string) => {
   const syllablesCount = nlp(sentence)
     .terms()
     .syllables()
     .map(({ syllables }) => syllables)
-    .reduce((count, syllables) => count + syllables.length, 0);
+    .reduce((count : any, syllables : any) => count + syllables.length, 0);
   return syllablesCount;
 };

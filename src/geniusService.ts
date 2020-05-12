@@ -3,10 +3,9 @@ import cheerio from "cheerio";
 import config from "./config";
 
 export interface ArtistData {
-	lyrics: Array<string>,
-	photoUrl: string
+	lyrics: Array<string>;
+	photoUrl: string;
 }
-
 
 export default class GeniusService {
 	apiUrl: string;
@@ -56,16 +55,17 @@ export default class GeniusService {
 		}
 	}
 
-	async getArtistSongsPaths(id: number): Promise<Array<string>> {
+	async getArtistSongsPaths(id: number, howManySongs: number): Promise<Array<string>> {
 		try {
-			const fullApiUrl = `${this.apiUrl}/artists/${id}/songs?access_token=${this.apiKey}`;
+			const page = Math.ceil(Math.random() * Math.floor(howManySongs)) ;
+			const fullApiUrl = `${this.apiUrl}/artists/${id}/songs?sort=popularity&per_page=${howManySongs}&page=${page}&access_token=${this.apiKey}`;
 			const {
 				data: {
 					response: { songs },
 				},
 			} = await axios.get(fullApiUrl);
 			// don't know how to assign type here
-			const songsPaths = songs.map((song: any) => song.path).slice(5);
+			const songsPaths = songs.map((song: any) => song.path);
 			return songsPaths;
 		} catch (err) {
 			if (typeof err === "object") {
@@ -117,6 +117,7 @@ export default class GeniusService {
 				}
 				songsLyrics.push(...lyricsFiltered);
 			}
+			console.log(songsLyrics);
 			return songsLyrics;
 		} catch (err) {
 			throw new Error(err);
@@ -127,10 +128,10 @@ export default class GeniusService {
 		try {
 			let artistData: ArtistData;
 			const artistId = await this.getArtistId(name);
-			const songsPaths = await this.getArtistSongsPaths(artistId);
+			const songsPaths = await this.getArtistSongsPaths(artistId, 5);
 			const lyrics = await this.getArtistSongsLyrics(songsPaths);
 			const photoUrl = await this.getArtistPhoto(artistId);
-			artistData = {lyrics, photoUrl}
+			artistData = { lyrics, photoUrl };
 			return artistData;
 		} catch (err) {
 			throw new Error(err);
